@@ -1,6 +1,9 @@
 require 'intermix'
 require 'awesome_print'
 require 'approvals/rspec'
+require 'coveralls'
+
+Coveralls.wear!
 
 RSpec.configure do |rspec|
   # This config option will be enabled by default on RSpec 4,
