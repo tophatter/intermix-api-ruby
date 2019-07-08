@@ -28,8 +28,21 @@ Before performing any operation through the intermix api, we need an instance of
 ```
 require 'intermix'
 
-configuration = Intermix::Configuration.new(api_token: 'token', cluster_id: 1)
+configuration = Intermix::Configuration.new(api_token: api_token, cluster_id: cluster_id)
 client        = Intermix::Client.new(configuration)
+```
+
+#### Get list of tables
+```
+tables = client.tables # These are instances of `Intermix::Table`.
+```
+
+#### Generate vacuum script
+```
+vacuum = Intermix::Vacuum.new(client: client, delete_only: true, unsorted_threshold: 0.50)
+
+vacuum.generate_script # This returns the script in string format.
+vacuum.save_script # This saves the genered vacuum script in `output/vacuum_scripts/vacuum_databases.sh`.
 ```
 
 ## Development

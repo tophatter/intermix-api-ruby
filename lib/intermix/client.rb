@@ -11,7 +11,7 @@ module Intermix
       @configuration = configuration
     end
 
-    def tables(fields)
+    def tables(fields = Table::FIELDS)
       fields &&= Table::FIELDS
       query = "fields=#{fields.join(',')}" if fields.any?
 

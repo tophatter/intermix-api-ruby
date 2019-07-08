@@ -92,8 +92,12 @@ RSpec.describe Intermix::Vacuum do
       ]
     end
 
+    let(:delete_only) { false }
+    let(:full) { false }
+    let(:sort) { false }
+
     subject do
-      Intermix::Vacuum.new(client: stubbed_client, delete_only: true,
+      Intermix::Vacuum.new(client: stubbed_client, delete_only: delete_only, full: full, sort: sort,
                            stats_off_threshold: stats_off_threshold, unsorted_threshold: unsorted_threshold).generate_script
     end
 
@@ -102,8 +106,28 @@ RSpec.describe Intermix::Vacuum do
       allow(stubbed_client).to receive(:tables).and_return(tables)
     end
 
-    it 'generates the expected script' do
-      verify(format: :txt) { subject }
+    context 'when it is in delete_only mode' do
+      let(:delete_only) { true }
+
+      it 'generates the expected script' do
+        verify(format: :txt) { subject }
+      end
+    end
+
+    context 'when it is in sort mode' do
+      let(:sort) { true }
+
+      it 'generates the expected script' do
+        verify(format: :txt) { subject }
+      end
+    end
+
+    context 'when it is in full mode' do
+      let(:full) { true }
+
+      it 'generates the expected script' do
+        verify(format: :txt) { subject }
+      end
     end
   end
 end
