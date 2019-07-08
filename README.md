@@ -54,7 +54,7 @@ After checking out the repo, run `bundle install` to install dependencies. Then,
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/tophatter/intermix-client.
+Bug reports and pull requests are welcome on GitHub at https://github.com/tophatter/intermix-api-ruby.git.
 
 ## License
 
