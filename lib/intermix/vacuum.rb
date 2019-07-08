@@ -7,7 +7,7 @@ module Intermix
     REDSHIFT_HOST     = ''
     REDSHIFT_PORT     = 5439
 
-    IGNORED_SCHEMAS = %w(pg_internal)
+    IGNORED_SCHEMAS = %w[pg_internal]
 
     attr_reader :client,
                 :full, :delete_only, :sort, :analyze,

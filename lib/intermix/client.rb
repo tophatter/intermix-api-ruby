@@ -12,8 +12,8 @@ module Intermix
     end
 
     def tables(fields)
-      fields = fields && Table::FIELDS
-      query  = "fields=#{fields.join(',')}" if fields.any?
+      fields &&= Table::FIELDS
+      query = "fields=#{fields.join(',')}" if fields.any?
 
       response = post(TABLES_PATH, query: query)
 
@@ -30,7 +30,7 @@ module Intermix
     def post(path, query: nil)
       uri = "#{@configuration.base_uri}#{path}?" + query
 
-      response = HTTParty.post(uri, headers: headers)
+      HTTParty.post(uri, headers: headers)
     end
 
     def headers

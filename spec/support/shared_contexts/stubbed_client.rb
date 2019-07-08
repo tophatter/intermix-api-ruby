@@ -4,7 +4,7 @@ RSpec.shared_context 'stubbed_client' do
 
   let(:stubbed_configuration) { Intermix::Configuration.new(api_token: api_token, cluster_id: cluster_id) }
   let(:stubbed_client) { Intermix::Client.new(stubbed_configuration) }
-  
+
   # tables
   let(:stubbed_table) do
     {
@@ -20,7 +20,7 @@ RSpec.shared_context 'stubbed_client' do
       sort_key: 'id'
     }
   end
-  
+
   let(:successful_response) { OpenStruct.new('code': 200, success?: true, 'data': [stubbed_table].to_json, parsed_response: { 'data' => [stubbed_table] }) }
   let(:failed_response)     { OpenStruct.new('code': 403, 'data': nil) }
 end

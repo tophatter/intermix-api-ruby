@@ -5,10 +5,10 @@ RSpec.describe Intermix::Configuration do
     let(:cluster_id) { 1 }
 
     subject { Intermix::Configuration.new(api_token: api_token, cluster_id: cluster_id) }
-    
+
     context 'when api_token is nil' do
       let(:api_token) { nil }
-      
+
       it 'throws an error' do
         expect { subject }.to raise_error(ArgumentError, 'api_token cannot be nil.')
       end
@@ -16,7 +16,7 @@ RSpec.describe Intermix::Configuration do
 
     context 'when cluster_id is nil' do
       let(:cluster_id) { nil }
-      
+
       it 'throws an error' do
         expect { subject }.to raise_error(ArgumentError, 'cluster_id cannot be nil.')
       end
@@ -36,7 +36,7 @@ RSpec.describe Intermix::Configuration do
     let(:cluster_id) { 1 }
 
     subject { Intermix::Configuration.new(api_token: api_token, cluster_id: cluster_id).base_uri }
-    
+
     it 'returns the correct uri based on api_url, cluster_type and cluster_type' do
       expect(subject).to eq('https://dashboard.intermix.io/api/RedshiftCluster/1')
     end

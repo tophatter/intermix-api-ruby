@@ -9,7 +9,7 @@ RSpec.describe Intermix::Vacuum do
 
     context 'when client is nil' do
       let(:client) { nil }
-      
+
       it 'throws an error' do
         expect { subject }.to raise_error(ArgumentError, 'client cannot be nil.')
       end
@@ -75,25 +75,27 @@ RSpec.describe Intermix::Vacuum do
     let(:unsorted_threshold) { 0.22 }
     let(:threshold_met) do
       [
-        stubbed_table.merge(table_name: 'table1', stats_pct_off: 0.45, size_pct_unsorted: 0.41), #included
-        stubbed_table.merge(table_name: 'table2', stats_pct_off: 0.56, size_pct_unsorted: 0.78)  #included
+        stubbed_table.merge(table_name: 'table1', stats_pct_off: 0.45, size_pct_unsorted: 0.41), # included
+        stubbed_table.merge(table_name: 'table2', stats_pct_off: 0.56, size_pct_unsorted: 0.78)  # included
       ]
     end
     let(:threshold_unmet) do
       [
-        stubbed_table.merge(table_name: 'table3', stats_pct_off: 0.45, size_pct_unsorted: nil),  #excluded
-        stubbed_table.merge(table_name: 'table4', stats_pct_off: 0.45, size_pct_unsorted: 0.20), #excluded
-        stubbed_table.merge(table_name: 'table5', stats_pct_off: 0.20, size_pct_unsorted: 0.41), #excluded
+        stubbed_table.merge(table_name: 'table3', stats_pct_off: 0.45, size_pct_unsorted: nil),  # excluded
+        stubbed_table.merge(table_name: 'table4', stats_pct_off: 0.45, size_pct_unsorted: 0.20), # excluded
+        stubbed_table.merge(table_name: 'table5', stats_pct_off: 0.20, size_pct_unsorted: 0.41)  # excluded
       ]
     end
     let(:excluded_schema) do
       [
-        threshold_met.first.merge(schema_name: Intermix::Vacuum::IGNORED_SCHEMAS.first)
+        threshold_met.first.merge(schema_name: Intermix::Vacuum::IGNORED_SCHEMAS.first) # excluded
       ]
     end
 
-    subject { Intermix::Vacuum.new(client: stubbed_client, delete_only: true,
-                                   stats_off_threshold: stats_off_threshold, unsorted_threshold: unsorted_threshold).generate_script }
+    subject do
+      Intermix::Vacuum.new(client: stubbed_client, delete_only: true,
+                           stats_off_threshold: stats_off_threshold, unsorted_threshold: unsorted_threshold).generate_script
+    end
 
     before do
       tables = [threshold_met + threshold_unmet + excluded_schema].flatten.map { |t| Intermix::Table.new(t.with_indifferent_access) }

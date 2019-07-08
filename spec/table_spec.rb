@@ -5,7 +5,7 @@ RSpec.describe Intermix::Table do
 
     context 'when data is nil' do
       let(:data) { nil }
-      
+
       it 'throws an error' do
         expect { subject }.to raise_error(ArgumentError, 'data cannot be nil.')
       end
@@ -33,7 +33,7 @@ RSpec.describe Intermix::Table do
     subject { Intermix::Table.new(stubbed_table.with_indifferent_access) }
 
     it 'returns the schema name along with the table name' do
-      expect(subject.full_name).to eq("\"public\".\"events\"")
+      expect(subject.full_name).to eq('"public"."events"')
     end
   end
 end
