@@ -3,7 +3,7 @@ RSpec.describe Intermix::Client do
   describe '#initialize' do
     subject { Intermix::Client.new(configuration) }
 
-    context 'when the configuration is nil' do
+    context 'when configuration is nil' do
       let(:configuration) { nil }
       
       it 'throws an error' do
@@ -11,7 +11,7 @@ RSpec.describe Intermix::Client do
       end
     end
 
-    context 'when the configuration is present', :stubbed_client do
+    context 'when configuration is present', :stubbed_client do
       let(:configuration) { stubbed_configuration }
       
       it 'returns a client object' do

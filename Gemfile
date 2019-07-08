@@ -14,6 +14,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'approvals'
   gem 'coveralls', require: false
   gem 'rspec'
 end

@@ -1,3 +1,7 @@
+require 'intermix'
+require 'awesome_print'
+require 'approvals/rspec'
+
 RSpec.configure do |rspec|
   # This config option will be enabled by default on RSpec 4,
   # but for reasons of backwards compatibility, you have to
@@ -8,8 +12,9 @@ RSpec.configure do |rspec|
   rspec.shared_context_metadata_behavior = :apply_to_host_groups
 end
 
-require 'intermix'
-require 'awesome_print'
+Approvals.configure do |config|
+  config.approvals_path = 'spec/fixtures/approvals/'
+end
 
 gemspec = Gem::Specification.find_by_name('intermix-client')
 Dir["#{gemspec.gem_dir}/spec/support/**/*.rb"].each { |f| require f }

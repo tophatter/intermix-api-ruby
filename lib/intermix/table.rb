@@ -24,8 +24,8 @@ module Intermix
       self.class::FIELDS.each { |field| send("#{field}=", data[field]) }
     end
 
-    def full_table_name
-      "#{schema_name}.#{table_name}"
+    def full_name
+      "\"#{schema_name}\".\"#{table_name}\""
     end
   end
 end
