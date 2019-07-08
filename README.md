@@ -1,4 +1,7 @@
-# Intermix::Client
+[![Build Status](https://travis-ci.org/tophatter/intermix-api-ruby.svg?branch=master)](https://travis-ci.org/tophatter/intermix-api-ruby)
+[![Coverage Status](https://coveralls.io/repos/github/tophatter/intermix-api-ruby/badge.svg?branch=master)](https://coveralls.io/github/tophatter/intermix-api-ruby?branch=master)
+
+# Intermix API client for Ruby
 
 Intermix is an analytics platform that instruments Amazon Redshift to improve performance, reduce costs, and eliminate downtime. Our SaaS product intelligently tunes databases in the cloud, provides deep analytics, recommendations, and predictions, so companies don't have to hire DBA experts, throw money at performance problems, or deal with slow queries.
 This gem helps to interact with the Intermix API.
