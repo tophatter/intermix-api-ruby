@@ -23,7 +23,14 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+#### Creating a client
+Before performing any operation through the intermix api, we need an instance of `Intermix::Client`.
+```
+require 'intermix'
+
+configuration = Intermix::Configuration.new(api_token: 'token', cluster_id: 1)
+client        = Intermix::Client.new(configuration)
+```
 
 ## Development
 
