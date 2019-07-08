@@ -39,8 +39,8 @@ module Intermix
       @port       = port
     end
 
-    def generate_script
-      selected_tables = client.tables.select do |table|
+    def eligible_tables
+      client.tables.select do |table|
         if IGNORED_SCHEMAS.include?(table.schema_name)
           false
         elsif table.stats_pct_off.nil?
@@ -55,10 +55,12 @@ module Intermix
           true
         end
       end
+    end
 
+    def generate_script
       output = script_header
 
-      selected_tables.group_by(&:db_name).each do |db_name, tables|
+      eligible_tables.group_by(&:db_name).each do |db_name, tables|
         output += "\n\\c #{db_name}\n\n"
         tables.sort_by { |table| -table.size_pct_unsorted }.each do |table|
           output += vacuum_command(table: table)
