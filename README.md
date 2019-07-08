@@ -5,8 +5,6 @@ This gem helps to interact with the Intermix API.
 
 To experiment with that code, run `bin/console` for an interactive prompt.
 
-TODO: Delete this and the text above, and describe your gem
-
 ## Installation
 
 Add this line to your application's Gemfile:

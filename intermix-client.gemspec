@@ -12,6 +12,11 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/tophatter/intermix-api-ruby'
   spec.license       = 'MIT'
 
+  spec.required_ruby_version = '~> 2.3'
+
+  spec.add_dependency 'activesupport', '~> 4.2'
+  spec.add_dependency 'httparty',      '~> 0.17.0'
+
   spec.files         = `git ls-files`.split("\n")
   spec.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
