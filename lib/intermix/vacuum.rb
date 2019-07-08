@@ -2,6 +2,7 @@ module Intermix
   class Vacuum
     DEFAULT_STATS_OFF_THRESHOLD = 0.10
     DEFAULT_UNSORTED_THRESHOLD  = 0.10
+    DEFAULT_VACUUM_THRESHOLD    = 0.95
 
     REDSHIFT_USERNAME = ''
     REDSHIFT_HOST     = ''
@@ -17,6 +18,7 @@ module Intermix
     def initialize(client:,
                    delete_only: false, full: false, sort: false,
                    stats_off_threshold: DEFAULT_STATS_OFF_THRESHOLD, unsorted_threshold: DEFAULT_UNSORTED_THRESHOLD,
+                   vacuum_threshold: DEFAULT_VACUUM_THRESHOLD,
                    admin_user: REDSHIFT_USERNAME, host: REDSHIFT_HOST, port: REDSHIFT_PORT)
       raise ArgumentError, 'client cannot be nil.' unless client.present?
       raise ArgumentError, 'invalid vacuum mode.' if full && [delete_only, sort].any?
@@ -28,8 +30,9 @@ module Intermix
       @sort        = sort
       @analyze     = true if full || delete_only
 
-      @stats_off_threshold = stats_off_threshold
-      @unsorted_threshold  = unsorted_threshold
+      @stats_off_threshold  = stats_off_threshold
+      @unsorted_threshold   = unsorted_threshold
+      @vacuum_threshold_pct = [vacuum_threshold * 100, 100].min
 
       @admin_user = admin_user
       @host       = host
@@ -58,7 +61,7 @@ module Intermix
       selected_tables.group_by(&:db_name).each do |db_name, tables|
         output += "\n\\c #{db_name}\n\n"
         tables.sort_by { |table| -table.size_pct_unsorted }.each do |table|
-          output += vacuum_command(table: table, full: @full, delete_only: @delete_only, sort: @sort)
+          output += vacuum_command(table: table)
           output += analyze_command(table: table) if @analyze
           output += "\n"
         end
@@ -97,16 +100,16 @@ module Intermix
       SCRIPT
     end
 
-    def vacuum_command(table:, full:, delete_only:, sort:)
-      command = if full
+    def vacuum_command(table:)
+      command = if @full
         'FULL'
-      elsif delete_only
+      elsif @delete_only
         'DELETE ONLY'
-      elsif sort
+      elsif @sort
         table.sort_key == 'INTERLEAVED' ? 'REINDEX' : 'SORT ONLY'
       end
 
-      "VACUUM #{command} #{table.full_name}\n"
+      "VACUUM #{command} #{table.full_name} to #{@vacuum_threshold_pct.to_i} percent;\n"
     end
 
     def analyze_command(table:)

@@ -18,10 +18,10 @@ ${{psqlcommand}} -d ${{logindb}} -U ${{adminuser}} -p ${{redshiftport}} -h ${{re
 
 \c db1
 
-VACUUM DELETE ONLY "public"."table2"
+VACUUM DELETE ONLY "public"."table2" to 99 percent;
 ANALYZE "public"."table2";
 
-VACUUM DELETE ONLY "public"."table1"
+VACUUM DELETE ONLY "public"."table1" to 99 percent;
 ANALYZE "public"."table1";
 
 

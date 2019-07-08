@@ -97,8 +97,10 @@ RSpec.describe Intermix::Vacuum do
     let(:sort) { false }
 
     subject do
-      Intermix::Vacuum.new(client: stubbed_client, delete_only: delete_only, full: full, sort: sort,
-                           stats_off_threshold: stats_off_threshold, unsorted_threshold: unsorted_threshold).generate_script
+      vacuum = Intermix::Vacuum.new(client: stubbed_client, delete_only: delete_only, full: full, sort: sort,
+                           stats_off_threshold: stats_off_threshold, unsorted_threshold: unsorted_threshold,
+                           vacuum_threshold: 0.99)
+      vacuum.generate_script
     end
 
     before do

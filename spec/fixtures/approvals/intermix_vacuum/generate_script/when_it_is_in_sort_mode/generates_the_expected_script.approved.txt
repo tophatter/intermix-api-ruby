@@ -18,8 +18,8 @@ ${{psqlcommand}} -d ${{logindb}} -U ${{adminuser}} -p ${{redshiftport}} -h ${{re
 
 \c db1
 
-VACUUM SORT ONLY "public"."table2"
+VACUUM SORT ONLY "public"."table2" to 99 percent;
 
-VACUUM SORT ONLY "public"."table1"
+VACUUM SORT ONLY "public"."table1" to 99 percent;
 
 
