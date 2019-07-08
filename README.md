@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/tophatter/intermix-api-ruby.svg?branch=master)](https://travis-ci.org/tophatter/intermix-api-ruby)
-[![Coverage Status](https://coveralls.io/repos/github/tophatter/intermix-api-ruby/badge.svg?branch=master)](https://coveralls.io/github/tophatter/intermix-api-ruby?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/tophatter/intermix-api-ruby/badge.svg?branch=master&t=nC87CM)](https://coveralls.io/github/tophatter/intermix-api-ruby?branch=master)
 
 # Intermix API client for Ruby
 
