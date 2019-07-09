@@ -59,8 +59,9 @@ RSpec.describe Intermix::Vacuum do
           expect(subject.sort).to be_falsey
           expect(subject.analyze).to be_truthy
 
-          expect(subject.stats_off_threshold).to eq(0.10)
-          expect(subject.stats_off_threshold).to eq(0.10)
+          expect(subject.stats_off_threshold_pct).to eq(10)
+          expect(subject.unsorted_threshold_pct).to eq(10)
+          expect(subject.vacuum_threshold_pct).to eq(95)
 
           expect(subject.admin_user).to eq('')
           expect(subject.host).to eq('')
@@ -71,19 +72,19 @@ RSpec.describe Intermix::Vacuum do
   end
 
   describe '#generate_script', :stubbed_client do
-    let(:stats_off_threshold) { 0.21 }
-    let(:unsorted_threshold) { 0.22 }
+    let(:stats_off_threshold_pct) { 21 }
+    let(:unsorted_threshold_pct) { 22 }
     let(:threshold_met) do
       [
-        stubbed_table.merge(table_name: 'table1', stats_pct_off: 0.45, size_pct_unsorted: 0.41), # included
-        stubbed_table.merge(table_name: 'table2', stats_pct_off: 0.56, size_pct_unsorted: 0.78)  # included
+        stubbed_table.merge(table_name: 'table1', stats_pct_off: 45, size_pct_unsorted: 41), # included
+        stubbed_table.merge(table_name: 'table2', stats_pct_off: 56, size_pct_unsorted: 78)  # included
       ]
     end
     let(:threshold_unmet) do
       [
-        stubbed_table.merge(table_name: 'table3', stats_pct_off: 0.45, size_pct_unsorted: nil),  # excluded
-        stubbed_table.merge(table_name: 'table4', stats_pct_off: 0.45, size_pct_unsorted: 0.20), # excluded
-        stubbed_table.merge(table_name: 'table5', stats_pct_off: 0.20, size_pct_unsorted: 0.41)  # excluded
+        stubbed_table.merge(table_name: 'table3', stats_pct_off: 45, size_pct_unsorted: nil),  # excluded
+        stubbed_table.merge(table_name: 'table4', stats_pct_off: 45, size_pct_unsorted: 20), # excluded
+        stubbed_table.merge(table_name: 'table5', stats_pct_off: 20, size_pct_unsorted: 41)  # excluded
       ]
     end
     let(:excluded_schema) do
@@ -99,8 +100,8 @@ RSpec.describe Intermix::Vacuum do
     subject do
       vacuum = Intermix::Vacuum.new(client: stubbed_client,
                                     delete_only: delete_only, full: full, sort: sort,
-                                    stats_off_threshold: stats_off_threshold, unsorted_threshold: unsorted_threshold,
-                                    vacuum_threshold: 0.99)
+                                    stats_off_threshold_pct: stats_off_threshold_pct, unsorted_threshold_pct: unsorted_threshold_pct,
+                                    vacuum_threshold_pct: 99)
       vacuum.generate_script
     end
 
