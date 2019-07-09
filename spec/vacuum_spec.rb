@@ -82,9 +82,9 @@ RSpec.describe Intermix::Vacuum do
     end
     let(:threshold_unmet) do
       [
-        stubbed_table.merge(table_name: 'table3', stats_pct_off: 45, size_pct_unsorted: nil),  # excluded
-        stubbed_table.merge(table_name: 'table4', stats_pct_off: 45, size_pct_unsorted: 20), # excluded
-        stubbed_table.merge(table_name: 'table5', stats_pct_off: 20, size_pct_unsorted: 41)  # excluded
+        stubbed_table.merge(table_name: 'table3', stats_pct_off: 45, size_pct_unsorted: nil), # excluded
+        stubbed_table.merge(table_name: 'table4', stats_pct_off: 45, size_pct_unsorted: 20),  # excluded
+        stubbed_table.merge(table_name: 'table5', stats_pct_off: 20, size_pct_unsorted: 41)   # excluded
       ]
     end
     let(:excluded_schema) do
