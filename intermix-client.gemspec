@@ -3,7 +3,7 @@
 # gem push intermix-client-{VERSION}.gem
 Gem::Specification.new do |spec|
   spec.name          = 'intermix-client'
-  spec.version       = '0.0.2'
+  spec.version       = '0.0.3'
   spec.authors       = ['Joe Manley']
   spec.email         = ['joemanley201@gmail.com']
 

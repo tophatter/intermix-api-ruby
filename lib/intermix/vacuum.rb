@@ -1,8 +1,8 @@
 module Intermix
   class Vacuum
-    DEFAULT_STATS_OFF_THRESHOLD = 0.10
-    DEFAULT_UNSORTED_THRESHOLD  = 0.10
-    DEFAULT_VACUUM_THRESHOLD    = 0.95
+    DEFAULT_STATS_OFF_THRESHOLD_PCT = 10
+    DEFAULT_UNSORTED_THRESHOLD_PCT  = 10
+    DEFAULT_VACUUM_THRESHOLD_PCT    = 95
 
     REDSHIFT_USERNAME = ''
     REDSHIFT_HOST     = ''
@@ -12,13 +12,14 @@ module Intermix
 
     attr_reader :client,
                 :full, :delete_only, :sort, :analyze,
-                :stats_off_threshold, :unsorted_threshold,
+                :stats_off_threshold_pct, :unsorted_threshold_pct,
+                :vacuum_threshold_pct,
                 :admin_user, :host, :port
 
     def initialize(client:,
                    delete_only: false, full: false, sort: false,
-                   stats_off_threshold: DEFAULT_STATS_OFF_THRESHOLD, unsorted_threshold: DEFAULT_UNSORTED_THRESHOLD,
-                   vacuum_threshold: DEFAULT_VACUUM_THRESHOLD,
+                   stats_off_threshold_pct: DEFAULT_STATS_OFF_THRESHOLD_PCT, unsorted_threshold_pct: DEFAULT_UNSORTED_THRESHOLD_PCT,
+                   vacuum_threshold_pct: DEFAULT_VACUUM_THRESHOLD_PCT,
                    admin_user: REDSHIFT_USERNAME, host: REDSHIFT_HOST, port: REDSHIFT_PORT)
       raise ArgumentError, 'client cannot be nil.' unless client.present?
       raise ArgumentError, 'invalid vacuum mode.' if full && [delete_only, sort].any?
@@ -30,9 +31,9 @@ module Intermix
       @sort        = sort
       @analyze     = true if full || delete_only
 
-      @stats_off_threshold  = stats_off_threshold
-      @unsorted_threshold   = unsorted_threshold
-      @vacuum_threshold_pct = [vacuum_threshold * 100, 100].min
+      @stats_off_threshold_pct = stats_off_threshold_pct
+      @unsorted_threshold_pct  = unsorted_threshold_pct
+      @vacuum_threshold_pct    = [vacuum_threshold_pct, 100].min
 
       @admin_user = admin_user
       @host       = host
@@ -47,9 +48,9 @@ module Intermix
           false
         elsif table.size_pct_unsorted.nil?
           false
-        elsif table.stats_pct_off <= @stats_off_threshold
+        elsif table.stats_pct_off <= @stats_off_threshold_pct
           false
-        elsif table.size_pct_unsorted <= @unsorted_threshold
+        elsif table.size_pct_unsorted <= @unsorted_threshold_pct
           false
         else
           true
@@ -111,7 +112,7 @@ module Intermix
         table.sort_key == 'INTERLEAVED' ? 'REINDEX' : 'SORT ONLY'
       end
 
-      "VACUUM #{command} #{table.full_name} to #{@vacuum_threshold_pct.to_i} percent;\n"
+      "VACUUM #{command} #{table.full_name} to #{@vacuum_threshold_pct} percent;\n"
     end
 
     def analyze_command(table:)

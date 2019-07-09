@@ -14,8 +14,8 @@ RSpec.shared_context 'stubbed_client' do
       schema_name: 'public',
       table_id: 1,
       table_name: 'events',
-      stats_pct_off: 0.12,
-      size_pct_unsorted: 0.13,
+      stats_pct_off: 12,
+      size_pct_unsorted: 13,
       row_count: 123_456,
       sort_key: 'id'
     }
