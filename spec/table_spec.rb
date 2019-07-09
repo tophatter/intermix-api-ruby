@@ -21,8 +21,8 @@ RSpec.describe Intermix::Table do
         expect(subject.schema_name).to eq('public')
         expect(subject.table_id).to eq(1)
         expect(subject.table_name).to eq('events')
-        expect(subject.stats_pct_off).to eq(0.12)
-        expect(subject.size_pct_unsorted).to eq(0.13)
+        expect(subject.stats_pct_off).to eq(12)
+        expect(subject.size_pct_unsorted).to eq(13)
         expect(subject.row_count).to eq(123_456)
         expect(subject.sort_key).to eq('id')
       end
