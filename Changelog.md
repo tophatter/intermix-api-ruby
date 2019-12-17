@@ -1,3 +1,6 @@
+## 0.0.4
+* Allow this gem to be used with Rails 5+.
+
 ## 0.0.3
 * [Intermix::Vacuum - fix thresholds to actually respect percent values](https://github.com/tophatter/intermix-api-ruby/pull/9)
 
